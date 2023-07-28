@@ -21,10 +21,10 @@ const c: string = b.toString();
 
 // ここの型を修正する
 // const d: string = "hello";
-const d: 'hello' = 'hello';
+const d: "hello" = "hello";
 
 // ここがエラーにならないようにする
-const e: 'hello' = d;
+const e: "hello" = d;
 
 // ---------- 型推論 (Type Inference) ----------
 

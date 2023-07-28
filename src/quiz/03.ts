@@ -1,16 +1,16 @@
 // Q: 文字列の長さを "short", "medium", "long" の３種類に判定する関数の返り値の型を定義してください。
 // ヒント: literal types と union types を使うと実現できます。
-type StringLength = 'short' | 'medium' | 'long';
+type StringLength = "short" | "medium" | "long";
 const getStringLength = (s: string): StringLength => {
   if (s.length === 0) {
     // @ts-expect-error getStringLength should not return any invalid values.
     return "type error if other than 'short', 'medium', 'long'";
   } else if (s.length <= 5) {
-    return 'short';
+    return "short";
   } else if (s.length <= 10) {
-    return 'medium';
+    return "medium";
   } else {
-    return 'long';
+    return "long";
   }
 };
 
@@ -31,9 +31,9 @@ const includes = <T>(array: T[], value: T): boolean => {
 };
 
 const includesOk1 = includes([1, 2, 3], 4);
-const includesOk2: boolean = includes(['a', 'b'], 'c');
+const includesOk2: boolean = includes(["a", "b"], "c");
 // @ts-expect-error "message" doesn't match with the type of array (Array<number>).
-const includesTypeError1: boolean = includes([1, 2, 3], 'message');
+const includesTypeError1: boolean = includes([1, 2, 3], "message");
 
 // Q: パスワードが条件を満たしているか判定し、条件を満たしているときは "ok", 満たしていないときには
 //    "missingNumber", "missingSmallLetter", "missingCapitalLetter" を返す関数
@@ -45,29 +45,36 @@ type PasswordRequirementOption = {
   requireSmallLetters: boolean;
   requireCapitalLetters: boolean;
 };
-type PasswordRequirementResult = 'ok' | 'missingNumber' | 'missingSmallLetter' | 'missingCapitalLetter';
+type PasswordRequirementResult =
+  | "ok"
+  | "missingNumber"
+  | "missingSmallLetter"
+  | "missingCapitalLetter";
 
-const checkPasswordRequirement = (password: string, option?: PasswordRequirementOption): PasswordRequirementResult => {
+const checkPasswordRequirement = (
+  password: string,
+  option?: PasswordRequirementOption,
+): PasswordRequirementResult => {
   if (option?.requireNumbers) {
     if (!/\d/.test(password)) {
-      return 'missingNumber';
+      return "missingNumber";
     }
   }
   if (option?.requireSmallLetters) {
     if (!/[a-z]/.test(password)) {
-      return 'missingSmallLetter';
+      return "missingSmallLetter";
     }
   }
   if (option?.requireCapitalLetters) {
     if (!/[A-Z]/.test(password)) {
-      return 'missingCapitalLetter';
+      return "missingCapitalLetter";
     }
   }
-  return 'ok';
+  return "ok";
 };
 
-const checkPasswordRequirementOk1 = checkPasswordRequirement('password');
-const checkPasswordRequirementOk4 = checkPasswordRequirement('password123', {
+const checkPasswordRequirementOk1 = checkPasswordRequirement("password");
+const checkPasswordRequirementOk4 = checkPasswordRequirement("password123", {
   requireNumbers: true,
   requireSmallLetters: true,
   requireCapitalLetters: true,
@@ -77,10 +84,10 @@ const checkPasswordRequirementTypeError1: PasswordRequirementResult =
   checkPasswordRequirement(1);
 const checkPasswordRequirementTypeError2: PasswordRequirementResult =
   // @ts-expect-error the second argument is not a `PasswordRequirementOption`.
-  checkPasswordRequirement('password', 1);
+  checkPasswordRequirement("password", 1);
 const checkPasswordRequirementTypeError3: PasswordRequirementResult =
   // @ts-expect-error the second argument does not have some properties.
-  checkPasswordRequirement('password', { requireNumbers: 1 });
+  checkPasswordRequirement("password", { requireNumbers: 1 });
 const checkPasswordRequirementTypeError4: PasswordRequirementResult =
   // @ts-expect-error the second argument has a unknown property.
-  checkPasswordRequirement('password', { unknownOptions: false });
+  checkPasswordRequirement("password", { unknownOptions: false });
