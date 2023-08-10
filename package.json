@@ -12,6 +12,6 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "tsc",
-    "format:fix": "npx prettier . -w"
+    "format:fix": "npx prettier 'src/**/*.ts' -w"
   }
 }
